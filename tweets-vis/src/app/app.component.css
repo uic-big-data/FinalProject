@@ -1,0 +1,8 @@
+.main{
+    display: flex;
+}
+.appchart{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
