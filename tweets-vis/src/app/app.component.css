@@ -6,3 +6,8 @@
     right: 0;
     bottom: 0;
 }
+.slider{
+    position: absolute;
+    right: 0;
+    top: 20;
+}

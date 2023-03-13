@@ -1,5 +1,8 @@
 import { AfterViewInit, Component } from '@angular/core';
 import * as d3 from 'd3';
+import { InteractService } from '../interact-service.service'
+
+
 
 @Component({
   selector: 'app-chart',
@@ -7,7 +10,7 @@ import * as d3 from 'd3';
   styleUrls: ['./chart.component.css']
 })
 export class ChartComponent implements AfterViewInit {
-
+  constructor(private interactService: InteractService) { }
   data: any;
   x: any;
   xAxis: any;
@@ -68,11 +71,25 @@ export class ChartComponent implements AfterViewInit {
       .attr("width", this.x.bandwidth())
       .attr("height", (d: any) => this.height - this.y(d.Stars))
       .attr("fill", "#6e84d1")
-
-
-
   }
+
+
+
+
   ngAfterViewInit(): void {
+    this.interactService.sentiment$
+      .subscribe(
+        Sentiment => {
+          if (Sentiment) {
+            this.data = [
+              { "Framework": "Summer", "Stars": Sentiment['positive'] },
+              { "Framework": "Autumn", "Stars": Sentiment['negative'] },
+              { "Framework": "Winter", "Stars": Sentiment['neutral'] },
+            ];
+            this.update(this.data);
+          }
+        }
+      )
     this.data = [
       { "Framework": "Positive", "Stars": 78 },
       { "Framework": "Negative", "Stars": 20 },
