@@ -18,7 +18,7 @@ export class ChartComponent implements AfterViewInit {
   yAxis: any;
 
   svg: any;
-  margin = { top: 0, right: 25, bottom: 150, left: 5 };
+  margin = { top: 30, right: 30, bottom: 120, left: 25 };
   width = 250 - this.margin.left - this.margin.right;
   height = 250 - this.margin.top - this.margin.bottom;
 
@@ -37,30 +37,34 @@ export class ChartComponent implements AfterViewInit {
 
     this.x = d3.scaleBand()
       .range([0, this.width])
-      .domain(data.map((d: any) => d.Framework))
       .padding(0.2);
 
 
     this.xAxis = this.svg.append("g")
-      .attr("transform", "translate(0," + this.height + ")");
+      .attr("transform", `translate(0,${this.height})`)
 
     this.y = d3.scaleLinear()
-      .range([this.height, 0]);
+      .range([this.height, 0])
 
     this.yAxis = this.svg.append("g")
-      .attr("class", "myYaxis");
+      .attr("class", "myYaxis")
+      .call(d3.axisLeft(this.y));
   }
 
   // update bars based on pixel values obtained from mapcomponent
   update(data: any) {
 
-    this.xAxis.call(d3.axisBottom(this.x));
 
-    this.y.domain([0, d3.max(data, (d: any) => d.Stars)]);
+    this.x.domain(data.map((d: any) => d.Framework))
+    this.xAxis.transition().duration(1000).call(d3.axisBottom(this.x));
+    this.y.domain([0, d3.max(data, (d: any) => +d.Stars)]);
     this.yAxis.transition().duration(100).call(d3.axisLeft(this.y));
 
     var u = this.svg.selectAll("rect")
       .data(data)
+    const colorScale = d3.scaleOrdinal()
+      .domain(data.map((d: any) => d.Framework))
+      .range(["#00e600", "#ff4d4d", "#ffb84d"]);
 
     u
       .join("rect")
@@ -70,21 +74,19 @@ export class ChartComponent implements AfterViewInit {
       .attr("y", (d: any) => this.y(d.Stars))
       .attr("width", this.x.bandwidth())
       .attr("height", (d: any) => this.height - this.y(d.Stars))
-      .attr("fill", "#66b3ff")
+      .attr("fill", (d: any) => colorScale(d.Framework))
   }
-
-
-
 
   ngAfterViewInit(): void {
     this.interactService.sentiment$
       .subscribe(
         Sentiment => {
           if (Sentiment) {
+            // console.log(Sentiment['positive'] * 100, Sentiment['negative'] * 100, Sentiment['neutral'] * 100)
             this.data = [
-              { "Framework": "Positive", "Stars": Sentiment['positive'] },
-              { "Framework": "Negative", "Stars": Sentiment['negative'] },
-              { "Framework": "Neutral", "Stars": Sentiment['neutral'] },
+              { "Framework": "Positive", "Stars": Sentiment['positive'] * 100 },
+              { "Framework": "Negative", "Stars": Sentiment['negative'] * 100 },
+              { "Framework": "Neutral", "Stars": Sentiment['neutral'] * 100 },
             ];
             this.update(this.data);
           }

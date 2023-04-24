@@ -14,13 +14,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { TimeSeriesComponent } from './time-series/time-series.component';
 import { CommonModule } from '@angular/common';
 
+
 @NgModule({
   declarations: [
     AppComponent,
     MapComponent,
     ChartComponent,
     YearSliderComponent,
-    TimeSeriesComponent
+    TimeSeriesComponent,
   ],
   imports: [
     MatSliderModule,

@@ -8,8 +8,8 @@
 }
 .slider{
     position: absolute;
-    right: 5px;
-    bottom: 200px;
+    left: 5px;
+    bottom: 420px;
     width: 200px;
 }
 .time-series{

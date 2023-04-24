@@ -26,6 +26,7 @@ export class MapComponent implements AfterViewInit {
   geojson: any;
   vectorSource: any;
   vectorLayer: any
+  legendArray: any[] = [];
 
   colorPicker() {
     this.interactService.year$
@@ -48,38 +49,6 @@ export class MapComponent implements AfterViewInit {
       )
   }
 
-  legendCreator() {
-    var thresholds = d3.range(0, 101, 20);
-
-    var colorScale = d3.scaleSequential(d3.interpolateReds)
-      .domain([0, 2800]);
-
-    // Define the legend element
-    var legend = d3.select("#legend");
-
-    // Generate a legend using a series of divs with background colors
-    legend.selectAll("div")
-      .data(thresholds)
-      .enter().append("div")
-      .style("display", "inline-block")
-      .style("width", "20px")
-      .style("height", "20px")
-      .style("background-color", function (d) { return colorScale(d); });
-
-    // Add labels for the legend
-    legend.append("div")
-      .text(0)
-      .style("text-align", "left")
-      .style("display", "inline-block")
-      .style("width", "20px");
-
-    legend.append("div")
-      .text(2800)
-      .style("text-align", "right")
-      .style("display", "inline-block")
-      .style("width", "20px");
-  }
-
   getCountry() {
     const select = new Select();
     this.map.addInteraction(select);
@@ -100,7 +69,9 @@ export class MapComponent implements AfterViewInit {
         new Tile({
           source: new XYZ({
             url:
-              'https://api.maptiler.com/maps/positron/256/{z}/{x}/{y}.png?key=KymX1xZCJcVU9j6RwwkM',
+              // 'https://api.maptiler.com/maps/positron/256/{z}/{x}/{y}.png?key=KymX1xZCJcVU9j6RwwkM'
+              // 'https://api.maptiler.com/maps/streets-v2-dark/256/{z}/{x}/{y}.png?key=KymX1xZCJcVU9j6RwwkM#0.8/31.31907/8.93132',
+              'https://api.maptiler.com/maps/streets-v2-night/{z}/{x}/{y}.png?key=KymX1xZCJcVU9j6RwwkM#-0.2/0.00000/-56.06082',
           })
         }),
       ],

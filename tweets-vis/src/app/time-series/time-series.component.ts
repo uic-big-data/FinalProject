@@ -65,10 +65,8 @@ export class TimeSeriesComponent implements AfterViewInit {
     // Handmade legend
     svgLegend.append("circle").attr("cx", 150).attr("cy", 130).attr("r", 6).style("fill", "green")
     svgLegend.append("circle").attr("cx", 150).attr("cy", 145).attr("r", 6).style("fill", "red")
-    svgLegend.append("circle").attr("cx", 150).attr("cy", 160).attr("r", 6).style("fill", "steelblue")
     svgLegend.append("text").attr("x", 160).attr("y", 134).text("Predicted Price - Test").style("font-size", "15px").attr("alignment-baseline", "middle")
     svgLegend.append("text").attr("x", 160).attr("y", 149).text("Actual Price").style("font-size", "15px").attr("alignment-baseline", "middle")
-    svgLegend.append("text").attr("x", 160).attr("y", 164).text("Predicted Price - Train").style("font-size", "15px").attr("alignment-baseline", "middle")
   }
 
   timeSeriesGenerator(csvFileName: any) {
@@ -83,7 +81,7 @@ export class TimeSeriesComponent implements AfterViewInit {
       }
     ).then((data) => {
       // Add X axis
-      console.log(data.forEach((d) => console.log(d.close)))
+      // console.log(data.forEach((d) => console.log(d.close)))
       const xTent = d3.extent(data, d => d.date);
       const x = d3.scaleTime()
         .domain(<[Date, Date]>xTent)
@@ -94,21 +92,21 @@ export class TimeSeriesComponent implements AfterViewInit {
 
       // Add Y axis
       const y = d3.scaleLinear()
-        .domain([0, d3.max(data, function (d) { return d.result; })])
+        .domain([0, d3.max(data, function (d) { return d.close; })])
         .range([this.height, 0]);
       this.svg.append("g")
         .call(d3.axisLeft(y));
 
-      const resultPoints = data.map((d) => [x(d.date), y(d.result)]);
+      // const resultPoints = data.map((d) => [x(d.date), y(d.result)]);
       const resultTestPoints = data.map((d) => [x(d.date), y(d.result_test)]);
       const closePoints = data.map((d) => [x(d.date), y(d.close)]);
       // Add the line
-      this.svg.append("path")
-        .datum(resultPoints)
-        .attr("fill", "none")
-        .attr("stroke", "steelblue")
-        .attr("stroke-width", 1.5)
-        .attr("d", d3.line());
+      // this.svg.append("path")
+      //   .datum(resultPoints)
+      //   .attr("fill", "none")
+      //   .attr("stroke", "steelblue")
+      //   .attr("stroke-width", 1.5)
+      //   .attr("d", d3.line());
 
       this.svg.append("path")
         .datum(closePoints)
