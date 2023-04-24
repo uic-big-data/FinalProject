@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { MatSliderChange } from '@angular/material/slider';
-
+import { Options } from '@angular-slider/ngx-slider';
+import { InteractService } from '../interact-service.service';
 
 @Component({
   selector: 'app-year-slider',
@@ -8,13 +8,22 @@ import { MatSliderChange } from '@angular/material/slider';
   styleUrls: ['./year-slider.component.css']
 })
 export class YearSliderComponent {
-  value: number = 500;
+  constructor(private interactService: InteractService) { }
+  year: number = 5;
+  options: Options = {
+    floor: 2020,
+    ceil: 2022,
+    step: 1,
+    showTicks: true,
+    showTicksValues: true
+  };
+  onSliderChange() {
+    // console.log(this.year);
+    this.updateValues(this.year);
 
-  formatCurrency(value: number) {
-    return '$' + value;
   }
-
-  onSliderChange(event: MatSliderChange) {
-    this.value = event.value;
+  updateValues(yearData: any) {
+    // Emit new values to chart component using interact service
+    this.interactService.sendYear(yearData);
   }
 }

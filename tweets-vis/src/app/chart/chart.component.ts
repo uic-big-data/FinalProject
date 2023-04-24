@@ -18,8 +18,8 @@ export class ChartComponent implements AfterViewInit {
   yAxis: any;
 
   svg: any;
-  margin = { top: 30, right: 30, bottom: 70, left: 60 };
-  width = 300 - this.margin.left - this.margin.right;
+  margin = { top: 0, right: 25, bottom: 150, left: 5 };
+  width = 250 - this.margin.left - this.margin.right;
   height = 250 - this.margin.top - this.margin.bottom;
 
   // Svg to visualize bar chart
@@ -70,7 +70,7 @@ export class ChartComponent implements AfterViewInit {
       .attr("y", (d: any) => this.y(d.Stars))
       .attr("width", this.x.bandwidth())
       .attr("height", (d: any) => this.height - this.y(d.Stars))
-      .attr("fill", "#6e84d1")
+      .attr("fill", "#66b3ff")
   }
 
 
@@ -82,18 +82,18 @@ export class ChartComponent implements AfterViewInit {
         Sentiment => {
           if (Sentiment) {
             this.data = [
-              { "Framework": "Summer", "Stars": Sentiment['positive'] },
-              { "Framework": "Autumn", "Stars": Sentiment['negative'] },
-              { "Framework": "Winter", "Stars": Sentiment['neutral'] },
+              { "Framework": "Positive", "Stars": Sentiment['positive'] },
+              { "Framework": "Negative", "Stars": Sentiment['negative'] },
+              { "Framework": "Neutral", "Stars": Sentiment['neutral'] },
             ];
             this.update(this.data);
           }
         }
       )
     this.data = [
-      { "Framework": "Positive", "Stars": 78 },
-      { "Framework": "Negative", "Stars": 20 },
-      { "Framework": "Neutral", "Stars": 2 },
+      { "Framework": "Positive", "Stars": 0 },
+      { "Framework": "Negative", "Stars": 0 },
+      { "Framework": "Neutral", "Stars": 0 },
     ];
 
     this.createSvg();

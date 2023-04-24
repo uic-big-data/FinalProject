@@ -1,1 +1,10 @@
-<mat-slider min="0" max="1000" step="10" tick [displayWith]="formatCurrency"></mat-slider>
+<mat-card class="my-card">
+    <mat-card-header>
+        <mat-card-title>
+            Year
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <ngx-slider [(value)]="year" [options]="options" (mouseup)="onSliderChange()"></ngx-slider>
+    </mat-card-content>
+</mat-card>

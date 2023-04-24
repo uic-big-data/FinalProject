@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { InteractServiceService } from './interact-service.service';
+import { InteractService } from './interact-service.service';
 
 describe('InteractServiceService', () => {
-  let service: InteractServiceService;
+  let service: InteractService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(InteractServiceService);
+    service = TestBed.inject(InteractService);
   });
 
   it('should be created', () => {

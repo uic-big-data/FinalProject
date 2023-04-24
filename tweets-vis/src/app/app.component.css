@@ -3,11 +3,18 @@
 }
 .appchart{
     position: absolute;
-    right: 0;
-    bottom: 0;
+    left: 5px;
+    bottom: 200px;
 }
 .slider{
     position: absolute;
-    right: 0;
-    top: 20;
+    right: 5px;
+    bottom: 200px;
+    width: 200px;
+}
+.time-series{
+    position: absolute;
+    left:0px;
+    bottom: 0px;
+    width: 100%;
 }
